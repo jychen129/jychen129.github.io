@@ -6,14 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://jychen129.github.io">
-  <title>Archives: 2017 | J.Y. Chen 的博客</title>
+  <title>Variational Autoencoder | J.Y. Chen 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="J.Y. Chen 的博客">
-<meta property="og:url" content="https://jychen129.github.io/archives/2017/index.html">
+  <meta name="description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+0. Generative modelingInstead, one often cares about producing more examples that are like those already in a database, but n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Variational Autoencoder">
+<meta property="og:url" content="https://jychen129.github.io/2017/02/24/variational-autoencoder/index.html">
 <meta property="og:site_name" content="J.Y. Chen 的博客">
+<meta property="og:description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+0. Generative modelingInstead, one often cares about producing more examples that are like those already in a database, but n">
+<meta property="og:updated_time" content="2017-02-24T16:01:50.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="J.Y. Chen 的博客">
+<meta name="twitter:title" content="Variational Autoencoder">
+<meta name="twitter:description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+0. Generative modelingInstead, one often cares about producing more examples that are like those already in a database, but n">
   
     <link rel="alternative" href="/atom.xml" title="J.Y. Chen 的博客" type="application/atom+xml">
   
@@ -137,130 +150,121 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-variational-autoencoder" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/25/dp-multiview-paper/" class="archive-article-date">
-  	<time datetime="2017-02-24T16:02:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-25</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/25/dp-multiview-paper/">Deep Learning multi-view papers</a>
+    <h1 class="article-title" itemprop="name">
+      Variational Autoencoder
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/variational-autoencoder/" class="archive-article-date">
+        
+        <a href="/2017/02/24/variational-autoencoder/" class="archive-article-date">
   	<time datetime="2017-02-24T15:59:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/variational-autoencoder/">Variational Autoencoder</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>Doersch C. Tutorial on Variational Autoencoders[J]. 2016. <a href="https://arxiv.org/abs/1606.05908" target="_blank" rel="external">Link</a></li>
+</ol>
+<h2 id="0-Generative-modeling"><a href="#0-Generative-modeling" class="headerlink" title="0. Generative modeling"></a>0. Generative modeling</h2><p>Instead, one often cares about producing more examples that are like those already in a database, but not exactly the same.  <a id="more"></a></p>
+<p>We can formalize this setup by saying that we get examples $X$ distributed according to some unknown distribution $ P_{gt}(X) $.</p>
+<p>our goal is to learn a model $P$ which we can sample from, such that $P$ is as similar as possible to $P_{gt}(X)$.</p>
+<p>Training this type of model has been a long-standing problem in the machine learning community, and classically, most approaches have had one of three serious drawbacks.</p>
+<ol>
+<li><p>Require strong assumptions about the structure in the data.</p>
+</li>
+<li><p>Make severe approximations, leading to suboptimal models.</p>
+</li>
+<li><p>Rely on computationally expensive inference procedures like Markov Chain Monte Carlo.</p>
+</li>
+</ol>
+<p>More recently, some works have made tremendous progress in training neural networks as powerful function approximators through backpropagation. These advances have given rise to promising frameworks which can use backpropagation-based function approximators to build generative models.</p>
+<h2 id="1-1-Preliminaries-Latent-Variable-Model"><a href="#1-1-Preliminaries-Latent-Variable-Model" class="headerlink" title="1.1 Preliminaries: Latent Variable Model"></a>1.1 Preliminaries: Latent Variable Model</h2><p>Formally, say we have a vector of latent variables $z$ in a high-dimensional space $Z$ which we can easily sample according to some probability density function (PDF) $P(z)$ defined over $Z$.</p>
+<p>Then, say we have a family of deterministic functions $f (z; \theta)$, parameterized by a vector $\theta$ in some space $\Theta$, where $f : Z × \Theta \rightarrow X$ . f is deterministic, but<br>if $z$ is random and $q$ is fixed, then $f (z; q) $is a random variable in the space $X$. We wish to optimize $q$ such that we can sample $z$ from $P(z)$ and, with high probability, $f (z; q)$ will be like the $X$’s in our dataset.</p>
+<h2 id="2-Variational-Autoencoders"><a href="#2-Variational-Autoencoders" class="headerlink" title="2 Variational Autoencoders"></a>2 Variational Autoencoders</h2><p>The mathematical basis of VAEs actually has relatively little to do with classical autoencoders, e.g. sparse autoencoders or denoising autoencoders.</p>
+<p>They are called “autoencoders” only because the final training objective that derives from this setup does have an encoder and a decoder, and resembles a traditional autoencoder.</p>
+<p>To solve Equation 1, there are two problems that VAEs must deal with:</p>
+<ol>
+<li>how to define the latent variables $z$ (i.e., decide what information they represent)</li>
+<li>how to deal with the integral over $z$. VAEs give a definite answer to both.</li>
+</ol>
+<p>They assume that there is no simple interpretation of the dimensions of $z$, and instead assert that samples of z can be drawn from a simple distribution, i.e., $N (0, I)$, where $I$ is the identity matrix.</p>
+<p>In fact, recall that $P(X|z; θ) = N (X| f(z; θ), σ^2 * I)$. If $f(z; θ)$ is a multi-layer neural network, then we can imagine the network using its first few layers to map the normally distributed $z$’s to the latent values (like digit identity, stroke weight, angle, etc.) with exactly the right statitics.</p>
+<h2 id="2-1-Setting-up-the-objective"><a href="#2-1-Setting-up-the-objective" class="headerlink" title="2.1 Setting up the objective"></a>2.1 Setting up the objective</h2><p>The key idea behind the variational autoencoder is to attempt to sample values of $z$ that are likely to have produced $X$, and compute $P(X)$ just from those.</p>
+<p>This means that we need a new function $Q(z|X)$ which can take a value of $X$ and give us a distribution over $z$ values that are likely to produce $X$.</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/ariational-inference/" class="archive-article-date">
-  	<time datetime="2017-02-24T15:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/ariational-inference/">Variational inference : A Review</a>
-    </h1>
+    <a href="/2017/02/25/dp-multiview-paper/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Deep Learning multi-view papers
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/24/ariational-inference/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Variational inference : A Review</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="variational-autoencoder" data-title="Variational Autoencoder" data-url="https://jychen129.github.io/2017/02/24/variational-autoencoder/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jychen129"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/deeplearning-papers/" class="archive-article-date">
-  	<time datetime="2017-02-24T15:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/deeplearning-papers/">Deep Learning papers</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -283,8 +287,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
