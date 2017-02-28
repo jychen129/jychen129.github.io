@@ -6,14 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://jychen129.github.io">
-  <title>Archives | J.Y. Chen 的博客</title>
+  <title>Auto Variational Autoencodes | J.Y. Chen 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="J.Y. Chen 的博客">
-<meta property="og:url" content="https://jychen129.github.io/archives/index.html">
+  <meta name="description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+目标式最大化下述公式，$$P(X) = \int P(X|z;\theta)P(z) \mathrm{d}z$$实际上，在大部分的 $z$ 上，$P(X|z)$ 的值几乎为零。这就使得我们几乎难以计算估计 $P(X)$。
+所以我们需要一个新的函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auto Variational Autoencodes">
+<meta property="og:url" content="https://jychen129.github.io/2017/02/27/autoencodes/index.html">
 <meta property="og:site_name" content="J.Y. Chen 的博客">
+<meta property="og:description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+目标式最大化下述公式，$$P(X) = \int P(X|z;\theta)P(z) \mathrm{d}z$$实际上，在大部分的 $z$ 上，$P(X|z)$ 的值几乎为零。这就使得我们几乎难以计算估计 $P(X)$。
+所以我们需要一个新的函数">
+<meta property="og:image" content="https://jychen129.github.io/assets/img/post/autoencodes.jpg">
+<meta property="og:updated_time" content="2017-02-28T08:17:16.628Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="J.Y. Chen 的博客">
+<meta name="twitter:title" content="Auto Variational Autoencodes">
+<meta name="twitter:description" content="References
+Doersch C. Tutorial on Variational Autoencoders[J]. 2016. Link
+
+目标式最大化下述公式，$$P(X) = \int P(X|z;\theta)P(z) \mathrm{d}z$$实际上，在大部分的 $z$ 上，$P(X|z)$ 的值几乎为零。这就使得我们几乎难以计算估计 $P(X)$。
+所以我们需要一个新的函数">
+<meta name="twitter:image" content="https://jychen129.github.io/assets/img/post/autoencodes.jpg">
   
     <link rel="alternative" href="/atom.xml" title="J.Y. Chen 的博客" type="application/atom+xml">
   
@@ -137,157 +155,96 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-autoencodes" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Auto Variational Autoencodes
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/27/autoencodes/" class="archive-article-date">
+
+        
+        <a href="/2017/02/27/autoencodes/" class="archive-article-date">
   	<time datetime="2017-02-27T09:29:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-27</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/27/autoencodes/">Auto Variational Autoencodes</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/assets/img/post/autoencodes.jpg" alt="Autoencodes"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li>Doersch C. Tutorial on Variational Autoencoders[J]. 2016. <a href="https://arxiv.org/abs/1606.05908" target="_blank" rel="external">Link</a></li>
+</ol>
+<h2 id="目标式"><a href="#目标式" class="headerlink" title="目标式"></a>目标式</h2><p>最大化下述公式，<br>$$<br>P(X) = \int P(X|z;\theta)P(z) \mathrm{d}z<br>$$<br>实际上，在大部分的 $z$ 上，$P(X|z)$ 的值几乎为零。这就使得我们几乎难以计算估计 $P(X)$。</p>
+<p>所以我们需要一个新的函数 $Q(z|X)$ ，得到一个最有可能产生X数据的z的分布。</p>
+<p>由于 $Q(z)$ 空间相比 $P(z)$ 要小，因此计算 $E_{z \sim Q}[P(X|z)]$ 要相对容易一些。</p>
+<p>然而，如果 $z$ 是从分布 $Q(z)$ 中采样得到，而不是一个简单的 $ \mathcal{N}(0,I)$ 。又要如何去帮助我们优化 $P(X)$ 呢。首先，我们需要将 $E_{z \sim Q}[P(X|z)]$ 和 $P(X)$ 联系起来。</p>
+<p>$E_{z \sim Q}[P(X|z)]$ 和 $P(X)$ 的关系是变分贝叶斯方法的一个关键部分，我们定义 $P(z|X)$ 和 $Q(z)$ 之间的KL散度。这里的 $Q(z)$ 是任意的分布，并不取决与 $X$。<br>$$<br>\mathrm{KL} [Q(z) \parallel P(z|X)] = E_{z \sim Q} [log Q(z)-log P(z|X)]<br>$$<br>经过整理，我们可以得到下述式子：<br>$$<br>log P(X) - \mathrm{KL} [Q(z) \parallel P(z|X)] = E_{z∼Q} [log P(X|z)] -  \mathrm{KL}  [Q(z)\parallel P(z)]<br>$$<br>我们注意到， $X$ 是固定的，并且 $Q(z)$ 可以是任意的分布。 由于我们的问题关注在如何推断出 $P(X)$ ，因此要对 $Q(z)$ 加入一些限定条件。<br>$$<br>log P(X) - \mathrm{KL} [Q(z|X) \parallel P(z|X)] = E_{z∼Q} [log P(X|z)] -  \mathrm{KL}  [Q(z|X)\parallel P(z)]<br>$$<br>以上这个等式就是我们变分自编码器的关键。 在两个等式中， 等式左边是我们需要最大化的项： $P(X)$ （加上一个误差项，这使得分布 $Q(z)$ 采样得到的 $z$ 能够很好地再产生 $X$， 这一项会随着这个能力的增大而变小）。</p>
+<p>在选择一个恰当的 $Q(z)$ 分布后，等式右边是一项我们可以通过随机梯度下降方法（stochastic gradient descent，SGD）进行优化的项。 其中 $Q$ 是 从 $X$ 到 $z$ 的编码器（encoder），而 $P$ 是从 $z$ 到 $X$ 的解码器（decoder）。</p>
+<p>我们在最大化  $log P(X)$ 的同时，也在最小化 $\mathrm{KL} [Q(z|X) \parallel P(z|X)]$。这里的后验分布 $P(z|X)$ 通常难以通过贝叶斯公式得到。</p>
+<h2 id="目标式的优化方法"><a href="#目标式的优化方法" class="headerlink" title="目标式的优化方法"></a>目标式的优化方法</h2><p>那么，我们要如何优化等式的右边呢？首先，我们需要确定 $Q(z|X)$ 的形式。</p>
+<p>通常我们设定 $Q(z|X) =\mathcal{N}(z|\mu(X;\theta),\Sigma(X;\theta)) $，于是最后一项KL散度 $\mathrm{KL}  [Q(z|X)\parallel P(z)]$ 就是两个多元高斯分布的距离了，这可以轻易地得到闭式解。<br>$$<br>\mathrm{KL} [\mathcal{N}(\mu(X), \Sigma(X)) \parallel \mathcal{N}(0, I)] =\frac{1}{2}[tr(\Sigma(X))+(\mu(X))^\mathrm{T}(\mu(X))-k-log(\mathrm{det}(\Sigma(X))]<br>$$<br>其中 $k$ 是高斯分布的维数。</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/25/dp-multiview-paper/" class="archive-article-date">
-  	<time datetime="2017-02-24T16:02:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-25</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/25/dp-multiview-paper/">Deep Learning multi-view papers</a>
-    </h1>
+  
+    <a href="/2017/02/25/dp-multiview-paper/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Deep Learning multi-view papers</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="autoencodes" data-title="Auto Variational Autoencodes" data-url="https://jychen129.github.io/2017/02/27/autoencodes/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"jychen129"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/variational-autoencoder/" class="archive-article-date">
-  	<time datetime="2017-02-24T15:59:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/variational-autoencoder/">Variational Autoencoder</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/ariational-inference/" class="archive-article-date">
-  	<time datetime="2017-02-24T15:58:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/ariational-inference/">Variational inference : A Review</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/02/24/deeplearning-papers/" class="archive-article-date">
-  	<time datetime="2017-02-24T15:53:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/24/deeplearning-papers/">Deep Learning papers</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -310,8 +267,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
