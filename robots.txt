@@ -12,5 +12,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://datacon-ditakang.xyz/sitemap.xml
-Sitemap: https://datacon-ditakang.xyz/baidusitemap.xml
+Sitemap: https://datacon-13786.xyz/sitemap.xml
+Sitemap: https://datacon-13786.xyz/baidusitemap.xml
